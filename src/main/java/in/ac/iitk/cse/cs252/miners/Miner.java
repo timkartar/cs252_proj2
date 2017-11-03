@@ -23,8 +23,9 @@ public interface Miner {
      * If the block was mined by this miner, the second parameter will be set to true.
      * @param block block A block that has recently been announced
      * @param isMinerMe boolean value indicating if the block was mined by this miner.
+     * @throws ClassNotFoundException 
      */
-    void blockMined(Block block, boolean isMinerMe);
+    void blockMined(Block block, boolean isMinerMe) ; // added exceptions
 
 
     /**
