@@ -39,7 +39,7 @@ public class MajorityMiner extends BaseMiner implements Miner{
 			 if (currenthead == null) {
 	                currenthead = block;
 	            } else if (block != null && block.getHeight() > currenthead.getHeight()) {
-	                	if((float)this.getHashRate()/this.stats.getTotalHashRate() <= 0.5) {this.currenthead = block;}
+	                	if((float)this.getHashRate()/this.stats.getTotalHashRate() <= 0.5) {this.currenthead = block;}   //whenever we have more than half mining capacity reject blocks mined by others
 	                
 	            }
 		}
