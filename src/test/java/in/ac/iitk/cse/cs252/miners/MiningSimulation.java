@@ -113,41 +113,57 @@ public class MiningSimulation {
 //        Assertions.assertThat(attackerProfits).isGreaterThan(.35);
 //    }
 
-    @Test
-    public void simulateFeeSniping1() {
-        Miner attacker = new FeeSnipingMiner("Attacker", 300, 1);
-        Miner miner2 = new CompliantMiner("Miner2", 150, 1);
-        Miner miner3 = new CompliantMiner("Miner3", 150, 1);
-        Miner miner4 = new CompliantMiner("Miner4", 200, 1);
-        Miner miner5 = new CompliantMiner("Miner5", 100, 1);
-        Miner miner6 = new CompliantMiner("Miner6", 100, 1);
+//    @Test
+//    public void simulateFeeSniping1() {
+//        Miner attacker = new FeeSnipingMiner("Attacker", 300, 1);
+//        Miner miner2 = new CompliantMiner("Miner2", 150, 1);
+//        Miner miner3 = new CompliantMiner("Miner3", 150, 1);
+//        Miner miner4 = new CompliantMiner("Miner4", 200, 1);
+//        Miner miner5 = new CompliantMiner("Miner5", 100, 1);
+//        Miner miner6 = new CompliantMiner("Miner6", 100, 1);
+//
+//        ImmutableList<Miner> miners = ImmutableList.of(attacker, miner2, miner3, miner4, miner5, miner6);
+//        SimulationRandom rng = new SimulationRandom(1234);
+//        BlockReward reward = new LognormalReward(rng);
+//        Map<String, Double> relativeProfits = runSimulation(miners, reward, ChurnFunction.NO_CHURN);
+//        double attackerProfits = relativeProfits.get(attacker.getId());
+//        Assertions.assertThat(attackerProfits).isGreaterThan(.325);
+//    }
+//
+//    @Test
+//    public void simulateFeeSniping2() {
+//        Miner attacker = new FeeSnipingMiner("Attacker", 290, 1);
+//        Miner miner2 = new CompliantMiner("Miner2", 220, 1);
+//        Miner miner3 = new CompliantMiner("Miner3", 190, 1);
+//        Miner miner4 = new CompliantMiner("Miner4", 150, 1);
+//        Miner miner5 = new CompliantMiner("Miner5", 130, 1);
+//        Miner miner6 = new CompliantMiner("Miner6", 20, 1);
+//
+//        ImmutableList<Miner> miners = ImmutableList.of(attacker, miner2, miner3, miner4, miner5, miner6);
+//        SimulationRandom rng = new SimulationRandom(5678);
+//        BlockReward reward = new LognormalReward(rng);
+//        ChurnFunction churn = new NormalChurnFunction(0.2, 0.2, rng);
+//        Map<String, Double> relativeProfits = runSimulation(miners, reward, churn);
+//        double attackerProfits = relativeProfits.get(attacker.getId());
+//        Assertions.assertThat(attackerProfits).isGreaterThan(.31);
+//    }
+  @Test
+  public void Optional1() {
+      Miner attacker = new Group4Miner("Attacker", 290, 1);
+      Miner miner2 = new MajorityMiner("Miner2", 220, 1);
+      Miner miner3 = new FeeSnipingMiner("Miner3", 190, 1);
+      Miner miner4 = new CompliantMiner("Miner4", 150, 1);
+      Miner miner5 = new CompliantMiner("Miner5", 130, 1);
+      Miner miner6 = new CompliantMiner("Miner6", 20, 1);
 
-        ImmutableList<Miner> miners = ImmutableList.of(attacker, miner2, miner3, miner4, miner5, miner6);
-        SimulationRandom rng = new SimulationRandom(1234);
-        BlockReward reward = new LognormalReward(rng);
-        Map<String, Double> relativeProfits = runSimulation(miners, reward, ChurnFunction.NO_CHURN);
-        double attackerProfits = relativeProfits.get(attacker.getId());
-        Assertions.assertThat(attackerProfits).isGreaterThan(.325);
-    }
-
-    @Test
-    public void simulateFeeSniping2() {
-        Miner attacker = new FeeSnipingMiner("Attacker", 290, 1);
-        Miner miner2 = new CompliantMiner("Miner2", 220, 1);
-        Miner miner3 = new CompliantMiner("Miner3", 190, 1);
-        Miner miner4 = new CompliantMiner("Miner4", 150, 1);
-        Miner miner5 = new CompliantMiner("Miner5", 130, 1);
-        Miner miner6 = new CompliantMiner("Miner6", 20, 1);
-
-        ImmutableList<Miner> miners = ImmutableList.of(attacker, miner2, miner3, miner4, miner5, miner6);
-        SimulationRandom rng = new SimulationRandom(5678);
-        BlockReward reward = new LognormalReward(rng);
-        ChurnFunction churn = new NormalChurnFunction(0.2, 0.2, rng);
-        Map<String, Double> relativeProfits = runSimulation(miners, reward, churn);
-        double attackerProfits = relativeProfits.get(attacker.getId());
-        Assertions.assertThat(attackerProfits).isGreaterThan(.31);
-    }
-
+      ImmutableList<Miner> miners = ImmutableList.of(attacker, miner2, miner3, miner4, miner5, miner6);
+      SimulationRandom rng = new SimulationRandom(5678);
+      BlockReward reward = new LognormalReward(rng);
+      ChurnFunction churn = new NormalChurnFunction(0.2, 0.2, rng);
+      Map<String, Double> relativeProfits = runSimulation(miners, reward, churn);
+      double attackerProfits = relativeProfits.get(attacker.getId());
+      Assertions.assertThat(attackerProfits).isGreaterThan(.31);
+  }
 
     /**
      * Runs the simulation and returns a relative
