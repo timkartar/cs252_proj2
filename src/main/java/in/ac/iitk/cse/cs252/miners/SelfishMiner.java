@@ -6,6 +6,7 @@ import in.ac.iitk.cse.cs252.blockchain.NetworkStatistics;
 public class SelfishMiner extends BaseMiner implements Miner {
 	private Block currenthead;
 	private Block secrethead;
+	int secretlen = 0;
 	private NetworkStatistics stats;
 	
 	protected SelfishMiner(String id, int hashRate, int connectivity) {
@@ -15,7 +16,7 @@ public class SelfishMiner extends BaseMiner implements Miner {
 	@Override
 	public Block currentlyMiningAt() {
 		// TODO Auto-generated method stub
-			return currenthead;
+			return secrethead;
 	}
 
 	@Override
@@ -27,51 +28,46 @@ public class SelfishMiner extends BaseMiner implements Miner {
 	@Override
 	public void blockMined(Block block, boolean isMinerMe) {
 //		// TODO Auto-generated method stub
-//		int count = 0;
-//		if(isMinerMe) {
-//		  if (block.getHeight() > currenthead.getHeight()) {
-//              //this.currenthead = block;
-//			  if(this.secrethead.getMinedBy().equals(this.getId())) {
-//				  this.secrethead = block;
-//				  count++;
-//			  }
-//			  else {
-//				  count = 1;
-//				  this.secrethead = block;
-//			  }
-//          }
-//		}
-//		else{
-//          if (currenthead == null) {
-//              currenthead = block;
-//          } else if (block != null  && block.getHeight() > currenthead.getHeight()) {
-//              if(count > 1) {this.currenthead = secrethead; this.notify();}
-//              else if(this.getConnectivity()/stats.getTotalConnectivity() > 0.5) {
-//            	  this.currenthead = secrethead;
-//            	  //this.notifyAll();
-//              }
-//              else this.secrethead = block;
-//              this.currenthead = block;
-//          			
-//
-//          }
-//      }
+
 		 if(isMinerMe) {
-	            if (block.getHeight() > currenthead.getHeight()) {
-	                this.secrethead = block;
+			 	int delta = secrethead.getHeight() - currenthead.getHeight();
+			 	this.secrethead = block;
+			 	secretlen +=1;
+	            if (delta ==0 && secretlen == 2) {
 	                this.currenthead = block;
+	                secretlen = 0;
 	            }
+	           // this.currenthead = secrethead;
 	        }
 	        else{
+			 	int delta = secrethead.getHeight() - currenthead.getHeight();
+			 	Block temphead = currenthead;
+			 	this.currenthead = block;
 	            if (currenthead == null) {
 	                currenthead = block;
-	            } else if (block != null && block.getHeight() > currenthead.getHeight()) {
-	                this.currenthead = block;
+	            } else if (delta == 0 ) {
+	                this.secrethead = currenthead;
+	                secretlen = 0;
+	            }else if(delta == 1){
+	            	this.currenthead = secrethead;
+	            	secretlen = 0;
+	            }else if(delta == 2) {
+	            	this.currenthead = secrethead;
+	            	secretlen = 0;
 
+	            }else {
+	            	Block topublish = secrethead;
+	            	while(topublish.getPreviousBlock()!=null && topublish.getPreviousBlock()!= temphead) {
+	            		topublish = topublish.getPreviousBlock();
+	            	}
+	            	this.currenthead = topublish;
+	            	secretlen -= 1;
+	            }
+	            	
 	            }
 	        }
 		
-	}
+	
 	
 	public void withhold(Block  block) {
 		//if(currenthead.getPreviousBlock().getMinedBy().equals(this.getId())) currenthead = block;
