@@ -43,9 +43,8 @@ public class SelfishMiner extends BaseMiner implements Miner {
 			 	int delta = secrethead.getHeight() - currenthead.getHeight();
 			 	Block temphead = currenthead;
 			 	this.currenthead = block;
-	            if (currenthead == null) {
-	                currenthead = block;
-	            } else if (delta == 0 ) {
+	           
+	            if (delta == 0 ) {
 	                this.secrethead = currenthead;
 	                secretlen = 0;
 	            }else if(delta == 1){
