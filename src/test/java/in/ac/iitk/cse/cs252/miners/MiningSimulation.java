@@ -47,10 +47,11 @@ public class MiningSimulation {
 //    }
 
 
-    //TODO: Uncomment this part when testing your miners.
+ //   TODO: Uncomment this part when testing your miners.
+    
     @Test
     public void simulate51PercentAttack1() {
-        Miner attacker = new MajorityMiner("Attackerpl", 520, 1);
+        Miner attacker = new Group4Miner("Attackerpl", 520, 1);
         Miner miner2 = new CompliantMiner("Miner2", 200, 1);
         Miner miner3 = new CompliantMiner("Miner3", 130, 1);
         Miner miner4 = new CompliantMiner("Miner4", 90, 1);
@@ -67,7 +68,7 @@ public class MiningSimulation {
 
     @Test
     public void simulate51PercentAttack2() {
-        Miner attacker = new MajorityMiner("Attacker", 550, 1);
+        Miner attacker = new Group4Miner("Attacker", 550, 1);
         Miner miner2 = new CompliantMiner("Miner2", 150, 1);
         Miner miner3 = new CompliantMiner("Miner3", 100, 1);
         Miner miner4 = new CompliantMiner("Miner4", 100, 1);
@@ -83,7 +84,7 @@ public class MiningSimulation {
 
     @Test
     public void simulateSelfishMining1() {
-        Miner attacker = new SelfishMiner("Attacker", 34, 1);
+        Miner attacker = new Group4Miner("Attacker", 34, 1);
         Miner miner2 = new CompliantMiner("Miner2", 15, 1);
         Miner miner3 = new CompliantMiner("Miner3", 10, 1);
         Miner miner4 = new CompliantMiner("Miner4", 15, 1);
@@ -98,7 +99,7 @@ public class MiningSimulation {
 
     @Test
     public void simulateSelfishMining2() {
-        Miner attacker = new SelfishMiner("Attacker", 270, 20);
+        Miner attacker = new Group4Miner("Attacker", 270, 20);
         Miner miner2 = new CompliantMiner("Miner2", 150, 1);
         Miner miner3 = new CompliantMiner("Miner3", 100, 1);
         Miner miner4 = new CompliantMiner("Miner4", 150, 1);
@@ -115,7 +116,7 @@ public class MiningSimulation {
 
     @Test
     public void simulateFeeSniping1() {
-        Miner attacker = new FeeSnipingMiner("Attacker", 300, 1);
+        Miner attacker = new Group4Miner("Attacker", 300, 1);
         Miner miner2 = new CompliantMiner("Miner2", 150, 1);
         Miner miner3 = new CompliantMiner("Miner3", 150, 1);
         Miner miner4 = new CompliantMiner("Miner4", 200, 1);
@@ -132,7 +133,7 @@ public class MiningSimulation {
 
     @Test
     public void simulateFeeSniping2() {
-        Miner attacker = new FeeSnipingMiner("Attacker", 290, 1);
+        Miner attacker = new Group4Miner("Attacker", 290, 1);
         Miner miner2 = new CompliantMiner("Miner2", 220, 1);
         Miner miner3 = new CompliantMiner("Miner3", 190, 1);
         Miner miner4 = new CompliantMiner("Miner4", 150, 1);
@@ -147,23 +148,7 @@ public class MiningSimulation {
         double attackerProfits = relativeProfits.get(attacker.getId());
         Assertions.assertThat(attackerProfits).isGreaterThan(.31);
     }
-  @Test
-  public void Optional1() {
-      Miner attacker = new Group4Miner("Attacker", 290, 1);
-      Miner miner2 = new MajorityMiner("Miner2", 220, 1);
-      Miner miner3 = new FeeSnipingMiner("Miner3", 190, 1);
-      Miner miner4 = new CompliantMiner("Miner4", 150, 1);
-      Miner miner5 = new CompliantMiner("Miner5", 130, 1);
-      Miner miner6 = new CompliantMiner("Miner6", 20, 1);
 
-      ImmutableList<Miner> miners = ImmutableList.of(attacker, miner2, miner3, miner4, miner5, miner6);
-      SimulationRandom rng = new SimulationRandom(5678);
-      BlockReward reward = new LognormalReward(rng);
-      ChurnFunction churn = new NormalChurnFunction(0.2, 0.2, rng);
-      Map<String, Double> relativeProfits = runSimulation(miners, reward, churn);
-      double attackerProfits = relativeProfits.get(attacker.getId());
-      Assertions.assertThat(attackerProfits).isGreaterThan(.31);
-  }
 
     /**
      * Runs the simulation and returns a relative
