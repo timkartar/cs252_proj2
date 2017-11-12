@@ -24,17 +24,17 @@ public class FeeSnipingMiner extends BaseMiner implements Miner {
 
 	    @Override
 	    public void blockMined(Block block, boolean isMinerMe) {
-	        if(isMinerMe) {
+	        if(isMinerMe && block!=null) {
 	            if (block.getHeight() > currenthead.getHeight()) {
 	                this.currenthead = block;
 	            }
 	        }
-	        else{
+	        else if (block != null){
 	            if (currenthead == null) {
 	                currenthead = block;
 	            } else if (block != null && block.getHeight() > currenthead.getHeight()) {
 	            	//System.out.println(block.getBlockValue());
-	            	if(block.getBlockValue() < 20) {
+	            	if(block.getBlockValue() < 20) {    // took 20 as threshold value for 
 	            		this.currenthead = block;
 	            	}
 //	            	else {

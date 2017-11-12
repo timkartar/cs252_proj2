@@ -26,13 +26,13 @@ public class MajorityMiner extends BaseMiner implements Miner{
 	@Override
 	public void blockMined(Block block, boolean isMinerMe) {
 		// TODO Auto-generated method stub
-		if(isMinerMe) {
+		if(isMinerMe && block!= null) {
 			//do something
 			if (block.getHeight() > currenthead.getHeight()) {
                 this.currenthead = block;
 			}
 		}
-		else {
+		else if(block != null){
 //			//do something
 //			String miner = block.getMinedBy();
 //			double value = block.getBlockValue();

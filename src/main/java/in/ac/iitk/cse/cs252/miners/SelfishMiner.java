@@ -6,7 +6,7 @@ import in.ac.iitk.cse.cs252.blockchain.NetworkStatistics;
 public class SelfishMiner extends BaseMiner implements Miner {
 	private Block currenthead;
 	private Block secrethead;
-	int secretlen = 0;
+	//int secretlen = 0;
 	private NetworkStatistics stats;
 	
 	protected SelfishMiner(String id, int hashRate, int connectivity) {
@@ -29,38 +29,30 @@ public class SelfishMiner extends BaseMiner implements Miner {
 	public void blockMined(Block block, boolean isMinerMe) {
 //		// TODO Auto-generated method stub
 
-		 if(isMinerMe) {
-			 	int delta = secrethead.getHeight() - currenthead.getHeight();
-			 	this.secrethead = block;
-			 	secretlen +=1;
-	            if (delta ==0 && secretlen == 2) {
-	                this.currenthead = block;
-	                secretlen = 0;
+		 if(isMinerMe && block!=null) {
+			 	//int delta = secrethead.getHeight() - currenthead.getHeight();
+			 	if(this.secrethead ==null) this.secrethead = block;
+			 	int delta = block.getHeight() - secrethead.getHeight();
+
+			 	//secretlen +=1;
+	            if (delta > 0 ) {
+	                this.secrethead = block;
+	                
 	            }
 	           // this.currenthead = secrethead;
 	        }
-	        else{
-			 	int delta = secrethead.getHeight() - currenthead.getHeight();
-			 	Block temphead = currenthead;
-			 	this.currenthead = block;
-	           
-	            if (delta == 0 ) {
-	                this.secrethead = currenthead;
-	                secretlen = 0;
-	            }else if(delta == 1){
+	        else if(block != null){
+			 	int delta = block.getHeight() - secrethead.getHeight();
+			 	if(currenthead == null) this.currenthead = block;
+			 	else if (delta > 0 ) {
+	                this.secrethead = block;
+	                this.currenthead = block;
+	              //  secretlen = 0;
+	            } 
+			 	delta = block.getHeight() - secrethead.getHeight();
+	            if( !(delta < -1) ){
 	            	this.currenthead = secrethead;
-	            	secretlen = 0;
-	            }else if(delta == 2) {
-	            	this.currenthead = secrethead;
-	            	secretlen = 0;
-
-	            }else {
-	            	Block topublish = secrethead;
-	            	while(topublish.getPreviousBlock()!=null && topublish.getPreviousBlock()!= temphead) {
-	            		topublish = topublish.getPreviousBlock();
-	            	}
-	            	this.currenthead = topublish;
-	            	secretlen -= 1;
+	            	//secretlen = 0;
 	            }
 	            	
 	            }
